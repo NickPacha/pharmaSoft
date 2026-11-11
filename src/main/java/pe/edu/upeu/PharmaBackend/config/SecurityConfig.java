@@ -22,7 +22,6 @@ import pe.edu.upeu.PharmaBackend.security.RestAccessDeniedHandler;
 import pe.edu.upeu.PharmaBackend.security.RestAuthenticationEntryPoint;
 
 import static pe.edu.upeu.PharmaBackend.enums.Permiso.CATALOGO_ESCRIBIR;
-import static pe.edu.upeu.PharmaBackend.enums.Permiso.CATALOGO_LEER;
 import static pe.edu.upeu.PharmaBackend.enums.Permiso.CLIENTES_ESCRIBIR;
 import static pe.edu.upeu.PharmaBackend.enums.Permiso.CLIENTES_LEER;
 import static pe.edu.upeu.PharmaBackend.enums.Permiso.REPORTES_VER;
@@ -70,10 +69,12 @@ public class SecurityConfig {
 
                         // Catalogo: todos leen; solo ADMIN y ALMACENERO escriben
                         .requestMatchers(HttpMethod.GET,
-                                "/api/v1/categorias/**", "/api/v1/productos/**")
-                        .hasAuthority(CATALOGO_LEER.name())
+                                "/api/v1/categorias", "/api/v1/categorias/**",
+                                "/api/v1/productos", "/api/v1/productos/**")
+                        .permitAll()
                         .requestMatchers(
-                                "/api/v1/categorias/**", "/api/v1/productos/**")
+                                "/api/v1/categorias", "/api/v1/categorias/**",
+                                "/api/v1/productos", "/api/v1/productos/**")
                         .hasAuthority(CATALOGO_ESCRIBIR.name())
 
                         // Clientes
